@@ -21,7 +21,7 @@ intents.members = True
 load_dotenv('.env')
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-CHANNEL = os.getenv('DISCORD_CHANNEL')
+CHANNEL = int(os.getenv('DISCORD_CHANNEL'))
 
 bot = commands.Bot(command_prefix='!',intents = intents, case_insensitive = True)
 
@@ -95,11 +95,14 @@ class GENERAL(commands.Cog):
         fileName =  open('birthdays.txt','r')
         today = time.strftime('%B %d')
         current_month = time.strftime('%B')
+        msg = ''
         await ctx.send("Birthdays:\n")
         for text in fileName:
             line = text.split(' ')
-            print(line[0] + " "+ line[1] + " "+ line[2])
-            await ctx.send(line[0] + " "+ line[1] + " "+ line[2])
+            print(line[0] + " "+ line[1] + ": "+ line[2])
+            msg = msg + (line[0] + " "+ line[1] + ": "+ line[2])
+        await ctx.send(msg)
+
 
     @commands.command()
     async def games(self,ctx):
@@ -109,7 +112,7 @@ class GENERAL(commands.Cog):
         await ctx.send(game_choice)
 
     @commands.command(name = 'time')
-    async def findtime(self,ctx, arg):
+    async def findtime(self,ctx):
         chicago = timezone('America/Chicago')
         central_time = datetime.now(chicago)
         central_time = central_time.strftime('%I:%M %p')
@@ -128,7 +131,6 @@ class GENERAL(commands.Cog):
         quote_text = str1.join(quote_text)
 
         print(quote_text)
-        #await ctx.send(arg)
         await ctx.send(quote_text)
 
     @commands.command(name = 'status')
