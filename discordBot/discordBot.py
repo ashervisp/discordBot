@@ -104,11 +104,11 @@ class GENERAL(commands.Cog):
         await ctx.send(msg)
 
 
-    @commands.command()
+    @commands.command(name = 'game')
     async def games(self,ctx):
         gamelist = ['Overwatch','TableTop Simulator','Phasmaphobia','Among Us','Fall Guys']
         game_choice = "Game Suggestion for you!: " + random.choice(gamelist)
-        print(games_choice)
+        print(game_choice)
         await ctx.send(game_choice)
 
     @commands.command(name = 'time')
@@ -136,8 +136,15 @@ class GENERAL(commands.Cog):
     @commands.command(name = 'status')
     async def findstatus(self,ctx):
         print("Under Construction")
-
-
+        fileName = open('status.txt','r')
+        await ctx.send("Member Status:\n")
+        msg = ''
+        for text in fileName:
+            line = text.split(' ')
+            print(line[0] + ": "+ line[1] + " " + line[2])
+            msg = msg + (line[0] + ": "+ line[1] + " " + line[2])
+        await ctx.send(msg)
+        
     @commands.command(name = 'ban')
     async def banhammmer(self,ctx):
         await ctx.send("That is not my job chief")
